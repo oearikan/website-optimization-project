@@ -422,12 +422,15 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
+
+//EA: This follownig function is obsolete so I'm taking it out
   // function determineDx (elem, size) {
   //   var oldWidth = elem.offsetWidth;
   //   var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
   //   var oldSize = oldWidth / windowWidth;
   //
   //   // Changes the slider value to a percent width
+  // EA: Size switching is now handled inside changePizzaSizes.
   //   function sizeSwitcher (size) {
   //     switch(size) {
   //       case "1":
@@ -448,13 +451,13 @@ var resizePizzas = function(size) {
   // }
 
   // Iterates through pizza elements on the page and changes their widths
-  function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
-    }
-  }
+  // function changePizzaSizes(size) {
+  //   for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
+  //     var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
+  //     var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+  //     document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+  //   }
+  // }
 
   function changePizzaSizes(size) {
     switch(size){
@@ -484,7 +487,7 @@ var resizePizzas = function(size) {
   window.performance.mark("mark_end_resize");
   window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
-  console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
+  console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");1
 };
 
 window.performance.mark("mark_start_generating"); // collect timing data
@@ -523,9 +526,17 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover'); //another more efficient selector for .mover?
+  // var items = document.querySelectorAll('.mover'); //another more efficient selector for .mover?
+  var items = document.getElementsByClassName('mover');
+
+  // var phase =
+
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    var phase = Math.sin(i % 5);
+
+    // console.log(phase);
+    // console.log(phase, document.body.scrollTop / 1250); //EA: It appears document.body.scrollTop evaluates to 0 always, so there's no need to even calculate it
+
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
