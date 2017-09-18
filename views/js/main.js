@@ -493,7 +493,7 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 100; i++) {
+for (var i = 2; i < 48; i++) {
   var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
@@ -529,15 +529,14 @@ function updatePositions() {
   // var items = document.querySelectorAll('.mover'); //another more efficient selector for .mover?
   var items = document.getElementsByClassName('mover');
 
-  // var phase =
+  var phase = [Math.sin(0), Math.sin(1), Math.sin(2), Math.sin(3), Math.sin(4)]; //EA: Seems I dont need to evaluate phase 200 times. It only gets 5 different values and I find out that i can store those values in an array, then use the module fucntion as the index for the array when I'm calling it. Neat!!
 
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin(i % 5);
-
+    // var phase = Math.sin(i % 5);
     // console.log(phase);
     // console.log(phase, document.body.scrollTop / 1250); //EA: It appears document.body.scrollTop evaluates to 0 always, so there's no need to even calculate it
 
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    items[i].style.left = items[i].basicLeft + 100 * phase[i%5] + 'px'; //I was really happy to find out that I can write an equation in where I'd normally put the index of the array
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -557,7 +556,8 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  //EA:We dont need to create 200 pizzas after all. I go with 48 because it can span the biggest screen size and a product of 8.
+  for (var i = 0; i < 48; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
