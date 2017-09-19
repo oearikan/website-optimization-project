@@ -3,7 +3,7 @@
 ### How I set up the working environment for this project:
   1. Cloned original repo from https://github.com/udacity/frontend-nanodegree-mobile-portfolio
   2. Opted for GitHub pages in order to host the web site for analysis: https://oearikan.github.io/website-optimization-project/ (I find the incorporation of extra tools such as ngrok, grunt, gulp etc... distracting while I'm already struggling to learn a new skill, so I avoid them whenever I can. However, I appreciate that time will come that I'll find them handy. Just taking my time)
-  
+
 **Important Note:** Since at the time of me working on this project, *Timeline* tool was deprecated in favor of *Performance* tool by Google chrome, it felt a little off. Also possible due to updates happening since the time of recording, bits of code were not running as they were supposed to. For instance, my pizzas never moved since the beginning.
 
 ### Objective 1: PageSpeed Score
@@ -28,6 +28,7 @@
 ##### 2.1: Frame Rate
 - Optimized the ```updatePositions()``` function.
 - Reduced the number of moving pizzas from 200 to 48 which are created once the page loads.
+- Dropped ```querySelector``` and ```querySelectorAll``` selectors in favor of ```getElementById``` and ```getElementsByClassName``` selectors as recommended by reviewer.
 
 ##### 2.2: Computational Efficiency
 - Optmized the ```changePizzaSizes()``` function.

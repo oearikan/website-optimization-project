@@ -403,16 +403,17 @@ var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
+  //EA:Using 'getElementById' instead of the querySelector as suggested by the reviewer.
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -460,6 +461,8 @@ var resizePizzas = function(size) {
   // }
 
   function changePizzaSizes(size) {
+     var newWidth;
+
     switch(size){
       case "1":
         newWidth = 25;
@@ -474,7 +477,7 @@ var resizePizzas = function(size) {
         console.log("bug in sizeSwitcher");
     }
 
-    var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
+    var randomPizzas = document.getElementsByClassName("randomPizzaContainer"); //Dropping querySelectorAll in favor of getElementsByClassName
 
     for (var i = 0; i < randomPizzas.length; i++) {
       randomPizzas[i].style.width = newWidth + "%";
@@ -526,17 +529,12 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  // var items = document.querySelectorAll('.mover'); //another more efficient selector for .mover?
+  //EA: Dropped querySelector in favor of getElementsByClassName
   var items = document.getElementsByClassName('mover');
 
-  var phase = [Math.sin(0), Math.sin(1), Math.sin(2), Math.sin(3), Math.sin(4)]; //EA: Seems I dont need to evaluate phase 200 times. It only gets 5 different values and I find out that i can store those values in an array, then use the module fucntion as the index for the array when I'm calling it. Neat!!
-
   for (var i = 0; i < items.length; i++) {
-    // var phase = Math.sin(i % 5);
-    // console.log(phase);
-    // console.log(phase, document.body.scrollTop / 1250); //EA: It appears document.body.scrollTop evaluates to 0 always, so there's no need to even calculate it
-
-    items[i].style.left = items[i].basicLeft + 100 * phase[i%5] + 'px'; //I was really happy to find out that I can write an equation in where I'd normally put the index of the array
+    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
