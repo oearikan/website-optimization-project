@@ -531,10 +531,15 @@ function updatePositions() {
 
   //EA: Dropped querySelector in favor of getElementsByClassName
   var items = document.getElementsByClassName('mover');
+  var scrollVal = document.body.scrollTop / 1250;
+  var phase = [];
+  for (var i = 0; i < 5; i++) {
+    phase[i] = Math.sin(scrollVal + i);
+  }
 
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+  for (var j = 0; j < items.length; j++) {
+    // var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    items[j].style.left = items[j].basicLeft + 100 * phase[j%5] + 'px'; //EA:no matter the value of j, phase[j%5] will yield one of 5 different values that phase can get.
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
