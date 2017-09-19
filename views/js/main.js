@@ -560,15 +560,19 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
   //EA:We dont need to create 200 pizzas after all. I go with 48 because it can span the biggest screen size and a product of 8.
-  for (var i = 0; i < 48; i++) {
-    var elem = document.createElement('img');
+  //EA: Moved the decleration of variables outside the for loop
+  var i,
+  elem;
+  for (i = 0; i < 48; i++) {
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    //EA: Modified the selector again
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
